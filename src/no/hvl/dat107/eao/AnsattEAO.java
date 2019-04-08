@@ -140,7 +140,7 @@ public class AnsattEAO {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
     
-        String queryStr = "SELECT pd FROM Prosjektdeltakelse pd WHERE pd.ansatt.ansattID LIKE :ansattID AND pd.prosjekt.prosjektID LIKE :prosjektID";
+        String queryStr = "SELECT pd FROM Prosjektdeltakelse pd WHERE pd.ansatt.ansattID = :ansattID AND pd.prosjekt.prosjektID = :prosjektID";
 
         try {
             tx.begin();

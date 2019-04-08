@@ -41,7 +41,7 @@ CREATE TABLE prosjektdeltakelse (
     prosjektid INTEGER NOT NULL,
     arbeidstimar INTEGER,
     rolle VARCHAR,
-    CONSTRAINT prosjektdeltakelse_pk PRIMARY KEY(prosjekt_del_id),
+    CONSTRAINT prosjektdeltakelse_pk PRIMARY KEY(prosjektdelid),
     CONSTRAINT prosjektdeltakelse_unik UNIQUE (ansattid, prosjektid),
     CONSTRAINT ansattid_fk FOREIGN KEY (ansattid) REFERENCES ansatt(ansattid),
     CONSTRAINT prosjektid_fk FOREIGN KEY (prosjektid) REFERENCES prosjekt(prosjektid)

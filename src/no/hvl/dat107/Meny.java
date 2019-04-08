@@ -56,6 +56,7 @@ public class Meny {
         int id;
         Ansatt ans = null;
         Avdeling avd = null;
+        Prosjekt p = null;
         switch (val) {
             case 0:
                 ferdig = true;
@@ -137,6 +138,7 @@ public class Meny {
                 }
 
                 //sjef blir skreve ut 2 ganger, ok?
+                //prøv å fikse? velje vekk der ansattid = avdeling sin sjef sin ansattid?
 
                 break;
 
@@ -169,23 +171,34 @@ public class Meny {
                 break;
 
             case 10:
-                Prosjekt p = lesInnProsjekt();
+                p = lesInnProsjekt();
                 proEAO.leggTilNyttProsjekt(p);
                 System.out.println("\n------ Nytt prosjekt er lagt inn i databasen ------");
                 break;
 
             case 11:
+                System.out.println("\n------ Registrere ny prosjektdeltakelse ------");
                 regProsjektDeltakelse();
-                //TODO
-                //IKKJE FERDIG
                 break;
 
             case 12:
-                //TODO
+                System.out.println("\n------ Føre timar for ein ansatt på eit prosjekt ------");
+                System.out.println("Skriv inn id til ansatt:");
+                int id1 = Integer.parseInt(lesar.nextLine());
+                System.out.println("Skriv inn prosjekt-ID der ein skal føre timar på:");
+                int id2 = Integer.parseInt(lesar.nextLine());
+                System.out.println("Skriv inn antall timar som skal leggjast til:");
+                int timar = Integer.parseInt(lesar.nextLine());
+                ansEAO.foreTimarPaaProsjekt(id1, id2, timar);
+                //burde jo sjekka om id-ane er gyldige...
                 break;
 
             case 13:
-                //TODO
+                System.out.println("\n------ Skriv ut info om eit prosjekt ------");
+                System.out.println("Skriv inn prosjekt-ID:");
+                id = Integer.parseInt(lesar.nextLine());
+                p = proEAO.finnProsjekt(id);
+                System.out.println(p);
                 break;
 
             default:
@@ -259,6 +272,23 @@ public class Meny {
     }
 
     private void regProsjektDeltakelse() {
+        System.out.println("Skriv inn id til ansatt:");
+        int ansID = Integer.parseInt(lesar.nextLine());
+        Ansatt a = ansEAO.finnAnsattMedId(ansID);
+
+        System.out.println("Skriv inn prosjekt-ID:");
+        int proID = Integer.parseInt(lesar.nextLine());
+        Prosjekt p = proEAO.finnProsjekt(proID);
+
+        if(p != null && a != null) {
+            System.out.println("Skriv inn rolla til den ansatte i prosjektet:");
+            String rolle = lesar.nextLine();
+            //skrive inn timar?
+            Prosjektdeltakelse pd = new Prosjektdeltakelse(0, rolle, a, p);
+            proEAO.registrerProsjektDeltakelse(a, p, pd);
+        } else {
+            System.out.println("Fant ikkje den ansatte / prosjektet!");
+        }
 
     }
 

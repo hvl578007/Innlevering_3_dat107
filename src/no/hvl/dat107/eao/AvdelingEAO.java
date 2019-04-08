@@ -38,6 +38,7 @@ public class AvdelingEAO {
             em.persist(avd); //avd er managed
 
             sjef = em.merge(sjef);
+            sjef.getAvdeling().fjernAnsatt(sjef);
             sjef.setAvdeling(avd);
             avd.leggTilAnsatt(sjef);
             
